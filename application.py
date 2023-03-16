@@ -135,7 +135,8 @@ class Application(QWidget):
                 self.events_container["name"][counter],
                 self.events_container["date"][counter],
                 self.events_container["description"][counter],
-                (lambda state, temp_counter=counter: self.edit_event_frame(temp_counter))
+                (lambda state, edit_counter=counter: self.edit_event_frame(edit_counter)),
+                (lambda state, delete_counter=counter: self.delete_event(delete_counter))
             )
             widgets["group_box"].append(gb)
             self.grid.addWidget(widgets["group_box"][-1], counter, 0)
@@ -237,7 +238,7 @@ class Application(QWidget):
         widgets["button"].append(go_back_butt)
 
         # We create button to confirm and save new event
-        confirm_butt = wt.create_button("Confirm", (lambda: self.change_after_edit(event_number)), 200, 120)
+        confirm_butt = wt.create_button("Confirm", (lambda: self.change_after_edit(event_number)),  200, 120)
         widgets["button"].append(confirm_butt)
 
         # We add our elements to grid
@@ -263,6 +264,17 @@ class Application(QWidget):
 
         # Redirect user to main menu after event was added
         self.main_menu_frame()
+
+    def delete_event(self, number_of_event):
+        """Function used to delete certain event from app and reload screen"""
+
+        #We delete event that user selected to delete
+        del self.events_container["name"][number_of_event]
+        del self.events_container["date"][number_of_event]
+        del self.events_container["description"][number_of_event]
+
+        #We reload frame with events without this event
+        self.check_events_frame()
 
     def clear_grid(self):
         """Clear grid of all old elements"""

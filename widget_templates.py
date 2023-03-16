@@ -126,11 +126,13 @@ def create_event_group_box(name, date, description, edit_function, delete_functi
     #We set values for an event
     text_label = create_event_label(f"{name} | {date} | {description}")
     settings_button = create_event_button("Edit", edit_function, 100, 80)
+    delete_button = create_event_button("Del", delete_function, 100, 80)
 
     #We create grid and add elements to it
     vbox = QGridLayout()
     vbox.addWidget(text_label, 0, 0)
     vbox.addWidget(settings_button, 0, 1)
+    vbox.addWidget(delete_button, 0, 2)
 
     group_box.setLayout(vbox)
 
