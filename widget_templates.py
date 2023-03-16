@@ -142,6 +142,18 @@ def create_event_group_box(name, date, description, edit_function, delete_functi
     return group_box
 
 
+def create_message_box(text):
+    """Function to make creating message boxes for events easier in our app"""
+
+    #We create message box
+    message_box = QMessageBox()
+
+    #We set our text
+    message_box.setText(text)
+
+    return message_box
+
+
 
 
 

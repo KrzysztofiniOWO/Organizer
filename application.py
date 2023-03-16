@@ -153,17 +153,36 @@ class Application(QWidget):
     def add_event(self):
         """Add event after pressing confirm button"""
 
-        #Add name of new event to our dict
-        self.events_container["name"].append(widgets["input"][-5].text())
+        #Parameters to check if user input is correct
+        len_year = (len(str(widgets["input"][-4].text())) == 4)
+        len_month = (len(str(widgets["input"][-3].text())) == 2)
+        len_day = (len(str(widgets["input"][-2].text())) == 2)
+        year_numeric = str(widgets["input"][-4].text()).isnumeric()
+        month_numeric = str(widgets["input"][-3].text()).isnumeric()
+        day_numeric = str(widgets["input"][-2].text()).isnumeric()
+        day_correct = ((int(widgets["input"][-3].text()) >= 0) and (int(widgets["input"][-3].text()) <= 31))
+        month_correct = ((int(widgets["input"][-3].text()) >= 0) and (int(widgets["input"][-3].text()) <= 12))
 
-        #Add date of new event to our dict
-        self.events_container["date"].append(f'{widgets["input"][-4].text()}.{widgets["input"][-3].text()}.{widgets["input"][-2].text()}')
+        if len_year and len_month and len_day and year_numeric and month_numeric and day_numeric and day_correct and month_correct:
 
-        #Add description of new event to our dict
-        self.events_container["description"].append(widgets["input"][-1].text())
+            #Add name of new event to our dict
+            self.events_container["name"].append(widgets["input"][-5].text())
 
-        #Redirect user to main menu after event was added
-        self.main_menu_frame()
+            #Add date of new event to our dict
+            self.events_container["date"].append(f'{widgets["input"][-4].text()}.{widgets["input"][-3].text()}.{widgets["input"][-2].text()}')
+
+            #Add description of new event to our dict
+            self.events_container["description"].append(widgets["input"][-1].text())
+
+            #Redirect user to main menu after event was added
+            self.main_menu_frame()
+
+        else:
+            msg_box = wt.create_message_box("Your input is incorrect. Check if date input is ok")
+            msg_box.exec()
+            self.add_event_frame()
+
+
 
     def save_events_and_close_app(self):
         """Save our events before closing our app"""
